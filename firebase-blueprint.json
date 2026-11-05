@@ -1,0 +1,47 @@
+{
+  "entities": {
+    "ExecutionRecord": {
+      "title": "ExecutionRecord",
+      "description": "Lịch sử thực thi code từ xa qua Remote Compiler Engine.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID bản ghi" },
+        "language": { "type": "string", "description": "Ngôn ngữ chạy" },
+        "code": { "type": "string", "description": "Mã nguồn đã chạy" },
+        "stdout": { "type": "string", "description": "Đầu ra chuẩn stdout" },
+        "stderr": { "type": "string", "description": "Lỗi stderr" },
+        "exitCode": { "type": "number", "description": "Mã thoát exit code" },
+        "executionTimeMs": { "type": "number", "description": "Thời gian thực thi ms" },
+        "createdAt": { "type": "string", "description": "Thời điểm thực thi" },
+        "userId": { "type": "string", "description": "UID người dùng" }
+      },
+      "required": ["language", "code", "createdAt"]
+    },
+    "RemoteServerConfig": {
+      "title": "RemoteServerConfig",
+      "description": "Cấu hình máy chủ MCP Server từ xa (Cloud SSE hoặc HTTP endpoint).",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "description": "ID cấu hình máy chủ" },
+        "name": { "type": "string", "description": "Tên máy chủ MCP" },
+        "url": { "type": "string", "description": "Đường dẫn kết nối SSE / HTTP" },
+        "transport": { "type": "string", "description": "Loại transport sse/stdio" },
+        "authToken": { "type": "string", "description": "Mã bảo mật Bearer token" },
+        "status": { "type": "string", "description": "Trạng thái máy chủ" },
+        "createdAt": { "type": "string", "description": "Thời gian tạo" },
+        "userId": { "type": "string", "description": "UID người dùng sở hữu" }
+      },
+      "required": ["name", "url", "transport", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/executions/{executionId}": {
+      "schema": { "$ref": "#/entities/ExecutionRecord" },
+      "description": "Lưu trữ lịch sử thực thi mã nguồn từ xa."
+    },
+    "/remote_servers/{serverId}": {
+      "schema": { "$ref": "#/entities/RemoteServerConfig" },
+      "description": "Lưu trữ danh sách máy chủ MCP từ xa của người dùng."
+    }
+  }
+}

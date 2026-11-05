@@ -1,0 +1,8 @@
+{
+  "name": "Remix MCP Architect",
+  "description": "A guide to building custom MCP servers and tools for AI integration and workflow automation. Tích Hợp Tool_Call cùng các công cụ Tools cho tác nhân ddamśmaays\n",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}

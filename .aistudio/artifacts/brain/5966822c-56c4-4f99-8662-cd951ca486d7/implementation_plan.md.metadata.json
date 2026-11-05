@@ -1,0 +1,6 @@
+{
+  "summary": "Kế hoạch xây dựng kiến trúc cơ sở dữ liệu tích hợp toàn diện (Bộ não AI tự chủ) gồm Relational DB cho metadata/users, Vector DB cho RAG/Knowledge base, và Python integration guide.",
+  "updatedAt": "2026-11-05T06:11:51.839915111Z",
+  "requestFeedback": true,
+  "userFacing": true
+}

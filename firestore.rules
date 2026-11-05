@@ -1,0 +1,47 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Global Default Deny
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidId(id) {
+      return id is string && id.size() <= 128 && id.matches('^[a-zA-Z0-9_\\-]+$');
+    }
+
+    // Connectivity test match
+    match /test/{testId} {
+      allow read: if true;
+    }
+
+    // Collection: Executions (Lịch sử chạy code từ xa)
+    match /executions/{executionId} {
+      allow read: if true;
+      allow create: if isValidId(executionId) 
+        && request.resource.data.language is string 
+        && request.resource.data.language.size() <= 32
+        && request.resource.data.code is string 
+        && request.resource.data.code.size() <= 100000;
+      allow update, delete: if false;
+    }
+
+    // Collection: Remote Servers (Danh sách MCP server từ xa)
+    match /remote_servers/{serverId} {
+      allow read: if true;
+      allow create: if isValidId(serverId)
+        && request.resource.data.name is string
+        && request.resource.data.name.size() <= 128
+        && request.resource.data.url is string
+        && request.resource.data.url.size() <= 1024;
+      allow update: if isValidId(serverId)
+        && request.resource.data.name is string
+        && request.resource.data.name.size() <= 128
+        && request.resource.data.url is string
+        && request.resource.data.url.size() <= 1024;
+      allow delete: if isValidId(serverId);
+    }
+  }
+}
